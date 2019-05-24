@@ -170,6 +170,7 @@ Plug 'joshdick/onedark.vim' "main color theme
 Plug 'luochen1990/rainbow' "rainbow highlight brackets
 Plug 'sebastianmarkow/deoplete-rust'
 Plug 'junegunn/fzf' "fuzzy jumping arround
+Plug 'junegunn/fzf.vim'
 Plug 'isaacmorneau/vim-simple-sessions' "sessions
 Plug 'neomake/neomake' "do full syntax checking for most languages
 Plug 'ntpeters/vim-better-whitespace' "show when there is gross trailing whitespace
@@ -213,14 +214,6 @@ let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 
-
-"this needs to go after other syntax plugins so it can override their rules
-"Plug 'dodie/vim-disapprove-deep-indentation'
-"this should always be the last plugin
-"Plug 'ryanoasis/vim-devicons'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-
 call plug#end()
 
 "i put this here so it doesnt look dumb when doing an update and the colors
@@ -232,9 +225,11 @@ set background=dark
 
 "[fzf]
 map <C-m> :FZF<CR>
+"map <s-enter> :FZF<CR>
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+
 
 " The Silver Searcher
 if executable('ag')
@@ -374,6 +369,14 @@ map <leader>wh :wincmd h<cr>
 map <leader>tv :vsplit<cr> :terminal<cr> A
 map <leader>ts :split<cr> :terminal<cr> A
 map <leader>tn :tab term<cr> A
+
+map <leader>gt gt
+map <leader>gT gT
+" buffer management
+map <leader>bn :bn<cr>
+map <leader>bp :bp<cr>
+map <leader>bd :bdelete<cr>
+map <leader>bD :bdelete!<cr>
 "map <leader>;;
 
 map <leader>mb :VimtexCompile<cr>
@@ -392,4 +395,13 @@ let g:vimtex_complete_smart_case = 1
 "let g:vimtex_complete_bib = 1
 let g:deoplete#enable_at_startup=1
 let g:vimtex_compiler_progname='nvr'
+set spell spelllang=en_us
+set spellfile=/home/dieraca/.config/nvim/spell/en.utf-8.add
 
+"deoplete rust setup
+let g:deoplete#souces#rust#racer_binary='/home/dieraca/.cargo/bin/racer'
+
+"keybinds that I want
+"       search through files in the directory
+"       grep through all the things
+"       ag

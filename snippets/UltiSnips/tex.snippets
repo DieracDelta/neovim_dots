@@ -120,6 +120,18 @@ endsnippet
 
 context "math()"
 priority 10
+snippet "vec" "vec" riA
+\vec{$1}$0
+endsnippet
+
+context "math()"
+priority 100
+snippet "([a-zA-Z])vec" "vec" riA
+\vec{`!p snip.rv=match.group(1)`}
+endsnippet
+
+context "math()"
+priority 10
 snippet "bar" "bar" riA
 \overline{$1}$0
 endsnippet
