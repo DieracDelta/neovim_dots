@@ -214,7 +214,32 @@ let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 
+" auto insert delimiters
+Plug 'Raimondi/delimitMate'
+
+"Plug 'https://github.com/neoclide/coc.vim', {'do': 'yarn install --frozen-lockfile'}
+
+Plug 'Shougo/deoplete.nvim'
+Plug 'autozimu/LanguageClient-neovim'
+
 call plug#end()
+
+" deoplete config
+" disable autocomplete by default as it's annoying
+" (b = buffer local)
+let b:deoplete_disable_auto_complete=1
+let g:deoplete_disable_auto_complete=1
+let g:deoplete#sources = {}
+set nobackup
+set nowritebackup
+" disable autocomplete in strings and comments
+call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+
+
+
+
+
+
 
 "i put this here so it doesnt look dumb when doing an update and the colors
 "are not appllied

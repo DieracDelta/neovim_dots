@@ -36,6 +36,7 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 <leader>wv	init.vim	/^map <leader>wv :vs<cr>$/;"	m
 Find	init.vim	/^        command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading -/;"	c
 InitializeDirectories	init.vim	/^function! InitializeDirectories()$/;"	f
+b:deoplete_disable_auto_complete	init.vim	/^let b:deoplete_disable_auto_complete=1$/;"	v
 g:UltiSnipsExpandTrigger	init.vim	/^let g:UltiSnipsExpandTrigger='<c-h>'$/;"	v
 g:UltiSnipsJumpBackwardTrigger	init.vim	/^let g:UltiSnipsJumpBackwardTrigger='<c-g>'$/;"	v
 g:UltiSnipsJumpForwardTrigger	init.vim	/^let g:UltiSnipsJumpForwardTrigger='<c-h>'$/;"	v
@@ -58,6 +59,8 @@ g:airline_symbols	init.vim	/^let g:airline_symbols.whitespace = 'Ξ'$/;"	v
 g:airline_theme	init.vim	/^let g:airline_theme='onedark'$/;"	v
 g:deoplete#enable_at_startup	init.vim	/^let g:deoplete#enable_at_startup=1$/;"	v
 g:deoplete#souces#rust#racer_binary	init.vim	/^let g:deoplete#souces#rust#racer_binary='\/home\/dieraca\/.cargo\/bin\/racer'$/;"	v
+g:deoplete#sources	init.vim	/^let g:deoplete#sources = {}$/;"	v
+g:deoplete_disable_auto_complete	init.vim	/^let g:deoplete_disable_auto_complete=1$/;"	v
 g:neoformat_basic_format_align	init.vim	/^let g:neoformat_basic_format_align = 1$/;"	v
 g:neoformat_basic_format_retab	init.vim	/^let g:neoformat_basic_format_retab = 1$/;"	v
 g:neoformat_basic_format_trim	init.vim	/^let g:neoformat_basic_format_trim = 1$/;"	v
