@@ -8,22 +8,31 @@ $FZF_DEFAULT_COMMAND	init.vim	/^        let $FZF_DEFAULT_COMMAND = 'ag --hidden 
 $FZF_DEFAULT_COMMAND	init.vim	/^        let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git\/*"'$/;"	v
 $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\.*' -prune -o -path 'node_modules\/**' -prune -o/;"	v
 <C-l>	init.vim	/^inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u$/;"	m
-<C-m>	init.vim	/^map <C-m> :FZF<CR>$/;"	m
+<C-m>	init.vim	/^map <C-m> :tabedit<cr>$/;"	m
 <C-x>	init.vim	/^map <C-x> :Neoformat<CR>$/;"	m
 <C-z>	init.vim	/^inoremap <C-z> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root/;"	m
 <C-z>	init.vim	/^nnoremap <C-z> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'\/figures\/" > \/dev\/nul/;"	m
 <LeftRelease>	init.vim	/^vnoremap <LeftRelease> "*ygv$/;"	m
 <leader>bD	init.vim	/^map <leader>bD :bdelete!<cr>$/;"	m
-<leader>bN	init.vim	/^map <leader>bN :tabedit<cr>$/;"	m
+<leader>bN	init.vim	/^map <leader>bN :FZF<cr>$/;"	m
+<leader>bb	init.vim	/^map <leader>bb :Buffers<cr>$/;"	m
 <leader>bd	init.vim	/^map <leader>bd :bdelete<cr>$/;"	m
 <leader>bd	init.vim	/^map <leader>bd :q<cr>$/;"	m
+<leader>bl	init.vim	/^map <leader>bl :Lines<cr>$/;"	m
+<leader>bm	init.vim	/^map <leader>bm :Marks<cr>$/;"	m
 <leader>bn	init.vim	/^map <leader>bn :bn<cr>$/;"	m
 <leader>bn	init.vim	/^map <leader>bn :tabnext<cr>$/;"	m
 <leader>bp	init.vim	/^map <leader>bp :bp<cr>$/;"	m
 <leader>bp	init.vim	/^map <leader>bp :tabprevious<cr>$/;"	m
+<leader>bt	init.vim	/^map <leader>bt :BTags<cr>$/;"	m
+<leader>d	init.vim	/^nnoremap <silent> <leader>d :call LanguageClient_textDocument_definition()<CR>$/;"	m
 <leader>gT	init.vim	/^map <leader>gT gT$/;"	m
 <leader>gt	init.vim	/^map <leader>gt gt$/;"	m
+<leader>h	init.vim	/^nnoremap <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>$/;"	m
 <leader>mb	init.vim	/^map <leader>mb :VimtexCompile<cr>$/;"	m
+<leader>q	init.vim	/^nnoremap <silent> <leader>q :call LanguageClient_contextMenu()<CR>$/;"	m
+<leader>r	init.vim	/^nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>$/;"	m
+<leader>s	init.vim	/^nnoremap <silent> <leader>s :call LanguageClient_textDocument_references()<CR>$/;"	m
 <leader>tn	init.vim	/^map <leader>tn :tab term<cr> A$/;"	m
 <leader>ts	init.vim	/^map <leader>ts :split<cr> :terminal<cr> A$/;"	m
 <leader>tv	init.vim	/^map <leader>tv :vsplit<cr> :terminal<cr> A$/;"	m
@@ -37,6 +46,10 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 Find	init.vim	/^        command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading -/;"	c
 InitializeDirectories	init.vim	/^function! InitializeDirectories()$/;"	f
 b:deoplete_disable_auto_complete	init.vim	/^let b:deoplete_disable_auto_complete=1$/;"	v
+g:LanguageClient_autoStart	init.vim	/^let g:LanguageClient_autoStart = 1$/;"	v
+g:LanguageClient_loadSettings	init.vim	/^let g:LanguageClient_loadSettings = 1$/;"	v
+g:LanguageClient_rootMarkers	init.vim	/^let g:LanguageClient_rootMarkers = {$/;"	v
+g:LanguageClient_serverCommands	init.vim	/^let g:LanguageClient_serverCommands = {$/;"	v
 g:UltiSnipsExpandTrigger	init.vim	/^let g:UltiSnipsExpandTrigger='<c-h>'$/;"	v
 g:UltiSnipsJumpBackwardTrigger	init.vim	/^let g:UltiSnipsJumpBackwardTrigger='<c-g>'$/;"	v
 g:UltiSnipsJumpForwardTrigger	init.vim	/^let g:UltiSnipsJumpForwardTrigger='<c-h>'$/;"	v
@@ -57,9 +70,13 @@ g:airline_symbols	init.vim	/^let g:airline_symbols.paste = 'ρ'$/;"	v
 g:airline_symbols	init.vim	/^let g:airline_symbols.paste = '∥'$/;"	v
 g:airline_symbols	init.vim	/^let g:airline_symbols.whitespace = 'Ξ'$/;"	v
 g:airline_theme	init.vim	/^let g:airline_theme='onedark'$/;"	v
+g:deoplete#custom#option#camelcase	init.vim	/^let g:deoplete#custom#option#camelcase=1$/;"	v
+g:deoplete#custom#option#ignorecase	init.vim	/^let g:deoplete#custom#option#ignorecase=1$/;"	v
 g:deoplete#enable_at_startup	init.vim	/^let g:deoplete#enable_at_startup=1$/;"	v
-g:deoplete#souces#rust#racer_binary	init.vim	/^let g:deoplete#souces#rust#racer_binary='\/home\/dieraca\/.cargo\/bin\/racer'$/;"	v
 g:deoplete#sources	init.vim	/^let g:deoplete#sources = {}$/;"	v
+g:deoplete#sources#rust#disable_keymap	init.vim	/^let g:deoplete#sources#rust#disable_keymap=1$/;"	v
+g:deoplete#sources#rust#documentation_max_height	init.vim	/^let g:deoplete#sources#rust#documentation_max_height=20$/;"	v
+g:deoplete#sources#rust#racer_binary	init.vim	/^let g:deoplete#sources#rust#racer_binary='\/home\/dieraca\/.cargo\/bin\/racer'$/;"	v
 g:deoplete_disable_auto_complete	init.vim	/^let g:deoplete_disable_auto_complete=1$/;"	v
 g:neoformat_basic_format_align	init.vim	/^let g:neoformat_basic_format_align = 1$/;"	v
 g:neoformat_basic_format_retab	init.vim	/^let g:neoformat_basic_format_retab = 1$/;"	v

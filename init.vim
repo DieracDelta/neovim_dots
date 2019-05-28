@@ -168,14 +168,12 @@ Plug 'chrisbra/Colorizer' "highlight hex codes with the color they are
 Plug 'isaacmorneau/vim-update-daily' "update vim plugins once a day (yea i made this one)
 Plug 'joshdick/onedark.vim' "main color theme
 Plug 'luochen1990/rainbow' "rainbow highlight brackets
-Plug 'sebastianmarkow/deoplete-rust'
 Plug 'junegunn/fzf' "fuzzy jumping arround
 Plug 'junegunn/fzf.vim'
 Plug 'isaacmorneau/vim-simple-sessions' "sessions
 Plug 'neomake/neomake' "do full syntax checking for most languages
 Plug 'ntpeters/vim-better-whitespace' "show when there is gross trailing whitespace
 Plug 'sbdchd/neoformat' "allows the formatting of code sanely
-"Plug 'neomake/neomake' "allows the formatting of code sanely
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['latex']
 Plug 'tpope/vim-surround' "change things surounding like ()->[]
@@ -184,18 +182,13 @@ Plug 'vim-airline/vim-airline-themes' "themes for the statusbar
 Plug 'majutsushi/tagbar'
 Plug 'vim-syntastic/syntastic'
 Plug 'ludovicchabant/vim-gutentags'
-"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-"Plug 'rafaqz/ranger.vim'
-Plug 'francoiscabrol/ranger.vim'
+"Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 
 "Plug 'jreybert/vimagit'
 "Plug 'jceb/vim-orgmode'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-speeddating'
-"Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-"Plug 'Shougo/neosnippet.vim'
-
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 Plug 'SirVer/ultisnips'
@@ -219,10 +212,40 @@ Plug 'Raimondi/delimitMate'
 
 "Plug 'https://github.com/neoclide/coc.vim', {'do': 'yarn install --frozen-lockfile'}
 
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'Shougo/deoplete.nvim'
-Plug 'autozimu/LanguageClient-neovim'
+Plug 'sebastianmarkow/deoplete-rust'
 
 call plug#end()
+
+
+" language server config
+let g:LanguageClient_serverCommands = {
+                \ 'go' : ['/home/dieraca/go/bin/go-langserver'],
+                \ 'tex': ['java', '-jar', '/home/dieraca/.languageservers/texlab/build/libs/texlab.jar'],
+                \ 'bib': ['java', '-jar', '/home/dieraca/.languageservers/texlab/build/libs/texlab.jar'],
+                \ 'rust' : ['/home/dieraca/.cargo/bin/rls'],
+                \ 'sh' : ['/home/dieraca/.languageservers/bash-language-server/server/bin/main.js', 'start'],
+                \ 'js' : ['node', '/home/dieraca/.languageservers/javascript-typescript-langserver/lib'],
+                \ 'python' : ['pyls'],
+                \ }
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_rootMarkers = {
+        \ 'go' : ['.git'],
+        \ 'tex' : ['.git'],
+        \ 'bib' : ['.git'],
+        \ 'rust' : ['Cargo.toml','.git'],
+        \ 'js' : ['.git', 'node_modules'],
+        \ 'python' : ['.git'],
+        \ }
+set completefunc=LanguageClient#complete
+let g:LanguageClient_loadSettings = 1
+nnoremap <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <leader>d :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <leader>s :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> <leader>q :call LanguageClient_contextMenu()<CR>
+
 
 " deoplete config
 " disable autocomplete by default as it's annoying
@@ -234,6 +257,14 @@ set nobackup
 set nowritebackup
 " disable autocomplete in strings and comments
 call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+
+"
+let g:deoplete#sources#rust#racer_binary='/home/dieraca/.cargo/bin/racer'
+let g:deoplete#sources#rust#disable_keymap=1
+let g:deoplete#sources#rust#documentation_max_height=20
+let g:deoplete#custom#option#camelcase=1
+let g:deoplete#custom#option#ignorecase=1
+" cntrl+n/p trigger neoplete's autocomplete
 
 
 
@@ -249,11 +280,16 @@ endif
 set background=dark
 
 "[fzf]
-map <C-m> :FZF<CR>
+"map <C-m> FZF<CR>
 "map <s-enter> :FZF<CR>
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+map <leader>bb :Buffers<cr>
+map <leader>bl :Lines<cr>
+map <leader>bt :BTags<cr>
+map <leader>bm :Marks<cr>
+map <leader>bN :FZF<cr>
 
 
 " The Silver Searcher
@@ -336,46 +372,14 @@ let g:airline_symbols.whitespace = 'Ξ'
 
 let g:airline#extensions#tabline#enabled = 1
 
-"[NeoMake]
-" When reading a buffer (after 1s), and when writing (no delay).
-"call neomake#configure#automake('rw', 1000)
-"
-"let g:neomake_javascript_jshint_maker = {
-"            \ 'args': ['--verbose'],
-"            \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-"            \ }
-"let g:neomake_javascript_enabled_makers = ['jshint']
-"let g:neomake_rust_enabled_makers = ['cargo']
-"let g:neomake_cargo_args = ['check']
-"" When writing a buffer (no delay).
-"call neomake#configure#automake('w')
-
-
-"[LookOfDisaproval]
-"let g:LookOfDisapprovalTabThreshold=5
-"let g:LookOfDisapprovalSpaceThreshold=(&tabstop*4)
-
 "i dont know what adds this bullshit but its annoying as hell
 let g:omni_sql_no_default_maps = 1
-
 
 let g:rustfmt_autosave = 1
 
 
 "autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
 "autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
-
-" ranger nvim
-"let g:ranger_terminal = 'alacritty -e'
-"map <leader>rr :RangerEdit<cr>
-"map <leader>rv :RangerVSplit<cr>
-"map <leader>rs :RangerSplit<cr>
-"map <leader>rt :RangerTab<cr>
-"map <leader>ri :RangerInsert<cr>
-"map <leader>ra :RangerAppend<cr>
-"map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
-"map <leader>rd :RangerCD<cr>
-"map <leader>rld :RangerLCD<cr>
 
 " spacemacs keybinds
 map <leader>ws :sp<cr>
@@ -384,7 +388,8 @@ map <leader>bd :q<cr>
 map <leader>wd :q<cr>
 map <leader>bn :tabnext<cr>
 map <leader>bp :tabprevious<cr>
-map <leader>bN :tabedit<cr>
+"map <leader>bN :tabedit<cr>
+map <C-m> :tabedit<cr>
 
 "split nav
 map <leader>wl :wincmd l<cr>
@@ -422,11 +427,3 @@ let g:deoplete#enable_at_startup=1
 let g:vimtex_compiler_progname='nvr'
 set spell spelllang=en_us
 set spellfile=/home/dieraca/.config/nvim/spell/en.utf-8.add
-
-"deoplete rust setup
-let g:deoplete#souces#rust#racer_binary='/home/dieraca/.cargo/bin/racer'
-
-"keybinds that I want
-"       search through files in the directory
-"       grep through all the things
-"       ag
