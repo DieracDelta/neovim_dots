@@ -32,6 +32,7 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 <leader>mb	init.vim	/^map <leader>mb :VimtexCompile<cr>$/;"	m
 <leader>q	init.vim	/^nnoremap <silent> <leader>q :call LanguageClient_contextMenu()<CR>$/;"	m
 <leader>r	init.vim	/^nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>$/;"	m
+<leader>rg	init.vim	/^map <leader>rg :Ag<cr>$/;"	m
 <leader>s	init.vim	/^nnoremap <silent> <leader>s :call LanguageClient_textDocument_references()<CR>$/;"	m
 <leader>tn	init.vim	/^map <leader>tn :tab term<cr> A$/;"	m
 <leader>ts	init.vim	/^map <leader>ts :split<cr> :terminal<cr> A$/;"	m

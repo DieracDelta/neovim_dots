@@ -13,6 +13,9 @@ set showmatch
 "follow case like a normal person
 set ignorecase
 set smartcase
+set cursorline
+"highlight CursorLine gui=underline
+
 "i only have so much screen space
 set wrap
 "go back like a normal person
@@ -228,6 +231,8 @@ let g:LanguageClient_serverCommands = {
                 \ 'sh' : ['/home/dieraca/.languageservers/bash-language-server/server/bin/main.js', 'start'],
                 \ 'js' : ['node', '/home/dieraca/.languageservers/javascript-typescript-langserver/lib'],
                 \ 'python' : ['pyls'],
+                \ 'cpp': ['/home/dieraca/.languageservers/ccls/Release/ccls', '--log-file=/tmp/ccls.log'],
+                \ 'c': ['/home/dieraca/.languageservers/ccls/Release/ccls', '--log-file=/tmp/ccls.log'],
                 \ }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_rootMarkers = {
@@ -237,7 +242,10 @@ let g:LanguageClient_rootMarkers = {
         \ 'rust' : ['Cargo.toml','.git'],
         \ 'js' : ['.git', 'node_modules'],
         \ 'python' : ['.git'],
+        \ 'c' : ['.git'],
+        \ 'cpp' : ['.git']
         \ }
+
 set completefunc=LanguageClient#complete
 let g:LanguageClient_loadSettings = 1
 nnoremap <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
@@ -290,6 +298,7 @@ map <leader>bl :Lines<cr>
 map <leader>bt :BTags<cr>
 map <leader>bm :Marks<cr>
 map <leader>bN :FZF<cr>
+map <leader>rg :Ag<cr>
 
 
 " The Silver Searcher
@@ -423,6 +432,7 @@ let g:vimtex_complete_close_braces = 1
 let g:vimtex_complete_ignore_case = 1
 let g:vimtex_complete_smart_case = 1
 "let g:vimtex_complete_bib = 1
+"
 let g:deoplete#enable_at_startup=1
 let g:vimtex_compiler_progname='nvr'
 set spell spelllang=en_us
