@@ -78,6 +78,7 @@ set formatoptions+=j
 "use a terminal that doesnt support it such as urxvt
 set tgc
 "set the encodings to be sane
+" note that to add word to custom dictionary, use zg (and undo is zug)
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -177,7 +178,7 @@ Plug 'isaacmorneau/vim-simple-sessions' "sessions
 Plug 'neomake/neomake' "do full syntax checking for most languages
 Plug 'ntpeters/vim-better-whitespace' "show when there is gross trailing whitespace
 Plug 'sbdchd/neoformat' "allows the formatting of code sanely
-Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot' "syntax highlighting"
 let g:polyglot_disabled = ['latex']
 Plug 'tpope/vim-surround' "change things surounding like ()->[]
 Plug 'vim-airline/vim-airline' "a statusbar
@@ -267,6 +268,7 @@ set nowritebackup
 call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
 
 "
+let g:deoplete#sources#rust#rust_source_path='/home/dieraca/.rustup/toolchains/nightly-2019-06-02-x86_64-unknown-linux-gnu'
 let g:deoplete#sources#rust#racer_binary='/home/dieraca/.cargo/bin/racer'
 let g:deoplete#sources#rust#disable_keymap=1
 let g:deoplete#sources#rust#documentation_max_height=20
@@ -437,3 +439,6 @@ let g:deoplete#enable_at_startup=1
 let g:vimtex_compiler_progname='nvr'
 set spell spelllang=en_us
 set spellfile=/home/dieraca/.config/nvim/spell/en.utf-8.add
+
+"colorizer config
+let g:colorizer_auto_color=1
