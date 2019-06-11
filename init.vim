@@ -194,6 +194,14 @@ Plug 'rbgrouleff/bclose.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-speeddating'
 
+" coc.nvim
+" to edit config file, :CocConfig
+"Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+
+
+
+
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
@@ -216,71 +224,11 @@ Plug 'Raimondi/delimitMate'
 
 "Plug 'https://github.com/neoclide/coc.vim', {'do': 'yarn install --frozen-lockfile'}
 
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-Plug 'Shougo/deoplete.nvim'
-Plug 'sebastianmarkow/deoplete-rust'
+"Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'sebastianmarkow/deoplete-rust'
 
 call plug#end()
-
-
-" language server config
-let g:LanguageClient_serverCommands = {
-                \ 'go' : ['/home/dieraca/go/bin/go-langserver'],
-                \ 'tex': ['java', '-jar', '/home/dieraca/.languageservers/texlab/build/libs/texlab.jar'],
-                \ 'bib': ['java', '-jar', '/home/dieraca/.languageservers/texlab/build/libs/texlab.jar'],
-                \ 'rust' : ['/home/dieraca/.cargo/bin/rls'],
-                \ 'sh' : ['/home/dieraca/.languageservers/bash-language-server/server/bin/main.js', 'start'],
-                \ 'js' : ['node', '/home/dieraca/.languageservers/javascript-typescript-langserver/lib'],
-                \ 'python' : ['pyls'],
-                \ 'cpp': ['/home/dieraca/.languageservers/ccls/Release/ccls', '--log-file=/tmp/ccls.log'],
-                \ 'c': ['/home/dieraca/.languageservers/ccls/Release/ccls', '--log-file=/tmp/ccls.log'],
-                \ }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_rootMarkers = {
-        \ 'go' : ['.git'],
-        \ 'tex' : ['.git'],
-        \ 'bib' : ['.git'],
-        \ 'rust' : ['Cargo.toml','.git'],
-        \ 'js' : ['.git', 'node_modules'],
-        \ 'python' : ['.git'],
-        \ 'c' : ['.git'],
-        \ 'cpp' : ['.git']
-        \ }
-
-set completefunc=LanguageClient#complete
-let g:LanguageClient_loadSettings = 1
-nnoremap <silent> <leader>h :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <leader>d :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <leader>s :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> <leader>q :call LanguageClient_contextMenu()<CR>
-
-
-" deoplete config
-" disable autocomplete by default as it's annoying
-" (b = buffer local)
-let b:deoplete_disable_auto_complete=1
-let g:deoplete_disable_auto_complete=1
-let g:deoplete#sources = {}
-set nobackup
-set nowritebackup
-" disable autocomplete in strings and comments
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-"
-let g:deoplete#sources#rust#rust_source_path='/home/dieraca/.rustup/toolchains/nightly-2019-06-02-x86_64-unknown-linux-gnu'
-let g:deoplete#sources#rust#racer_binary='/home/dieraca/.cargo/bin/racer'
-let g:deoplete#sources#rust#disable_keymap=1
-let g:deoplete#sources#rust#documentation_max_height=20
-let g:deoplete#custom#option#camelcase=1
-let g:deoplete#custom#option#ignorecase=1
-" cntrl+n/p trigger neoplete's autocomplete
-
-
-
-
-
-
 
 "i put this here so it doesnt look dumb when doing an update and the colors
 "are not appllied
@@ -300,7 +248,7 @@ map <leader>bl :Lines<cr>
 map <leader>bt :BTags<cr>
 map <leader>bm :Marks<cr>
 map <leader>bN :FZF<cr>
-map <leader>rg :Ag<cr>
+map <leader>gg :Ag<cr>
 
 
 " The Silver Searcher
@@ -380,6 +328,7 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
+let g:airline#extensions#coc#enabled = 1
 
 let g:airline#extensions#tabline#enabled = 1
 
@@ -396,6 +345,7 @@ let g:rustfmt_autosave = 1
 map <leader>ws :sp<cr>
 map <leader>wv :vs<cr>
 map <leader>bd :q<cr>
+map <leader>bD :Bclose!<cr>
 map <leader>wd :q<cr>
 map <leader>bn :tabnext<cr>
 map <leader>bp :tabprevious<cr>
@@ -442,3 +392,42 @@ set spellfile=/home/dieraca/.config/nvim/spell/en.utf-8.add
 
 "colorizer config
 let g:colorizer_auto_color=1
+
+" coc config
+" Show all diagnostics; escape to get out
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+" Search workleader symbols
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+" Resume latest coc list
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+" fix current line
+nmap <leader>qq  <Plug>(coc-fix-current)
+
+"" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Use `[c` and `]c` to navigate errors in current project
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>td <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>r <Plug>(coc-references)
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+nmap <leader>l :Format<cr>
