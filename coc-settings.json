@@ -1,18 +1,26 @@
 {
+        "coc.preferences.codeLens.enable": true,
         "suggest.triggerAfterInsertEnter": true,
         "suggest.timeout": 500,
-        "coc.source.around.priority":0,
+        "coc.source.around.priority": 0,
         "coc.source.around.enable": true,
-        "coc.source.buffer.priority":0,
+        "coc.source.buffer.priority": 0,
         "coc.source.buffer.enable": true,
-        "coc.source.file.priority":0,
+        "coc.source.file.priority": 0,
         "coc.source.file.enable": true,
-        "html.enable":true,
-        "rust-client.logToFile":true,
-        "rust.show_warnings":true,
+        "html.enable": true,
+        "rust-client.logToFile": true,
+        "rust.show_warnings": true,
         "rust.show_hover_context": true,
-        "coc.preferences.formatOnSaveFiletypes": ["rust", "python", "c", "Markdown", "golang"],
-        "coc.source.vimtex":true,
+        "coc.preferences.formatOnSaveFiletypes": [
+                "rust",
+                "python",
+                "c",
+                "Markdown",
+                "golang"
+        ],
+        "coc.source.vimtex": true,
+        "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8 -noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication",
         "languageserver": {
                 "python": {
                         "command": "python3.6",
@@ -84,17 +92,28 @@
                 "efm": {
                         "command": "efm-langserver",
                         "args": [],
-                        "filetypes": ["vim", "markdown"]
+                        "filetypes": [
+                                "vim",
+                                "markdown"
+                        ]
                 },
                 "bash": {
                         "command": "/home/dieraca/.languageservers/bash-language-server/server/bin/main.js",
-                        "args": ["start"],
-                        "filetypes": ["sh"],
-                        "ignoredRootPaths": ["~"]
+                        "args": [
+                                "start"
+                        ],
+                        "filetypes": [
+                                "sh"
+                        ],
+                        "ignoredRootPaths": [
+                                "~"
+                        ]
                 },
                 "golang": {
                         "command": "go-langserver",
-                        "filetypes": ["go"],
+                        "filetypes": [
+                                "go"
+                        ],
                         "initializationOptions": {
                                 "gocodeCompletionEnabled": true,
                                 "diagnosticsEnabled": true,
@@ -103,8 +122,19 @@
                 },
                 "ccls": {
                         "command": "ccls",
-                        "filetypes": ["c", "cpp", "objc", "objcpp"],
-                        "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+                        "filetypes": [
+                                "c",
+                                "cpp",
+                                "objc",
+                                "objcpp"
+                        ],
+                        "rootPatterns": [
+                                ".ccls",
+                                "compile_commands.json",
+                                ".vim/",
+                                ".git/",
+                                ".hg/"
+                        ],
                         "initializationOptions": {
                                 "cache": {
                                         "directory": "/tmp/ccls"
@@ -113,10 +143,25 @@
                 },
                 "latex": {
                         "command": "java",
-                        "args": ["-jar", "/home/dieraca/.languageservers/texlab/build/libs/texlab.jar"],
+                        "args": [
+                                "-jar",
+                                "/home/dieraca/.languageservers/texlab/build/libs/texlab.jar"
+                        ],
                         // not start server at home directory, since it won't work.
-                        "ignoredRootPaths": ["~"],
-                        "filetypes": ["tex", "bib", "plaintex", "context"]
+                        "ignoredRootPaths": [
+                                "~"
+                        ],
+                        "filetypes": [
+                                "tex",
+                                "bib",
+                                "plaintex",
+                                "context"
+                        ]
+                },
+                "dockerfile": {
+                        "command": "docker-langserver",
+                        "filetypes": ["dockerfile"],
+                        "args": ["--stdio"]
                 }
         }
 }

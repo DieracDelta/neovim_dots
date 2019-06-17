@@ -247,8 +247,9 @@ map <leader>bb :Buffers<cr>
 map <leader>bl :Lines<cr>
 map <leader>bt :BTags<cr>
 map <leader>bm :Marks<cr>
-map <leader>bN :FZF<cr>
+"map <leader>bN :FZF<cr>
 map <leader>gg :Ag<cr>
+nmap <silent> <leader>h :History<cr>
 
 
 " The Silver Searcher
@@ -349,8 +350,9 @@ map <leader>bD :Bclose!<cr>
 map <leader>wd :q<cr>
 map <leader>bn :tabnext<cr>
 map <leader>bp :tabprevious<cr>
-"map <leader>bN :tabedit<cr>
-map <C-m> :tabedit<cr>
+map <leader>bN :tabedit<cr>
+" enter spawns a new window
+map <C-m> :tabedit<cr>:FZF<cr>
 
 "split nav
 map <leader>wl :wincmd l<cr>
@@ -422,6 +424,8 @@ endfunction
 " Use `[c` and `]c` to navigate errors in current project
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" error handling aimed at vimtex specifically
+nmap <silent> <leader>ee :VimtexErrors<cr>
 
 " Remap keys for gotos
 nmap <silent> <leader>d <Plug>(coc-definition)
