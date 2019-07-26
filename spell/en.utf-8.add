@@ -2,3 +2,5 @@ microkernel
 monolithic
 syscall
 userspace
+inlined
+stdlib

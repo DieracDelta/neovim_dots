@@ -147,13 +147,6 @@ function! InitializeDirectories()
         endif
 endfunction
 call InitializeDirectories()
-let s:vim_plug = '~/.vim/autoload/plug.vim'
-"if we dont have vimplug yet use this to disable erring first run sections
-let s:first_run = 0
-if empty(glob(s:vim_plug, 1))
-    let s:first_run = 1
-    execute 'silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-endif
 
 "been around for ages yet isnt default for % to match if else etc
 runtime macros/matchit.vim
@@ -177,7 +170,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'isaacmorneau/vim-simple-sessions' "sessions
 Plug 'neomake/neomake' "do full syntax checking for most languages
 Plug 'ntpeters/vim-better-whitespace' "show when there is gross trailing whitespace
-Plug 'sbdchd/neoformat' "allows the formatting of code sanely
+"Plug 'sbdchd/neoformat' "allows the formatting of code sanely
 Plug 'sheerun/vim-polyglot' "syntax highlighting"
 let g:polyglot_disabled = ['latex']
 Plug 'tpope/vim-surround' "change things surounding like ()->[]
@@ -189,7 +182,7 @@ Plug 'ludovicchabant/vim-gutentags'
 "Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
 
-"Plug 'jreybert/vimagit'
+Plug 'jreybert/vimagit'
 "Plug 'jceb/vim-orgmode'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-speeddating'
@@ -199,7 +192,11 @@ Plug 'tpope/vim-speeddating'
 "Plug 'neoclide/coc.nvim'
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 
+" extra commands
+Plug 'tpope/vim-eunuch'
 
+" gdb
+Plug 'huawenyu/neogdb.vim'
 
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -218,6 +215,16 @@ let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-pdf',
+    \   '-pdflatex="xelatex --shell-escape %O %S"',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ]
+    \}
 
 " auto insert delimiters
 Plug 'Raimondi/delimitMate'
@@ -230,12 +237,7 @@ Plug 'Raimondi/delimitMate'
 
 call plug#end()
 
-"i put this here so it doesnt look dumb when doing an update and the colors
-"are not appllied
-if s:first_run == 0
-    colorscheme onedark
-endif
-set background=dark
+colorscheme onedark
 
 "[fzf]
 "map <C-m> FZF<CR>
@@ -303,12 +305,6 @@ let g:neoformat_cpp_clang_format = {
 let g:neoformat_enabled_c = ['clangformat']
 let g:neoformat_enabled_cpp = ['clangformat']
 
-"[one]
-"it was the first run so now we need to enable it again
-if s:first_run == 1
-    colorscheme onedark
-endif
-
 "[Airline]
 set laststatus=2
 let g:airline_theme='onedark'
@@ -353,6 +349,7 @@ map <leader>bp :tabprevious<cr>
 map <leader>bN :tabedit<cr>
 " enter spawns a new window
 map <C-m> :tabedit<cr>:FZF<cr>
+
 
 "split nav
 map <leader>wl :wincmd l<cr>
@@ -435,3 +432,9 @@ nmap <silent> <leader>r <Plug>(coc-references)
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 nmap <leader>l :Format<cr>
+
+nmap <C-Tab> gt
+nmap <C-S-Tab> gT
+nmap <leader>tt :tabedit<cr>:Explore<cr>
+
+nmap <leader>gs :MagitOnly<cr>

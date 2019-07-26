@@ -10,8 +10,6 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 0	coc-settings.json	/^                                                "pycodestyle"$/;"	s	array:languageserver.python.settings.pyls.configurationSources
 0	coc-settings.json	/^                                "-jar",$/;"	s	array:languageserver.latex.args
 0	coc-settings.json	/^                                "-mpyls",$/;"	s	array:languageserver.python.args
-0	coc-settings.json	/^                                ".ccls",$/;"	s	array:languageserver.ccls.rootPatterns
-0	coc-settings.json	/^                                "c",$/;"	s	array:languageserver.ccls.filetypes
 0	coc-settings.json	/^                                "go"$/;"	s	array:languageserver.golang.filetypes
 0	coc-settings.json	/^                                "python"$/;"	s	array:languageserver.python.filetypes
 0	coc-settings.json	/^                                "sh"$/;"	s	array:languageserver.bash.filetypes
@@ -25,22 +23,17 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 1	coc-settings.json	/^                                "-vv",$/;"	s	array:languageserver.python.args
 1	coc-settings.json	/^                                "\/home\/dieraca\/.languageservers\/texlab\/build\/libs\/texlab./;"	s	array:languageserver.latex.args
 1	coc-settings.json	/^                                "bib",$/;"	s	array:languageserver.latex.filetypes
-1	coc-settings.json	/^                                "compile_commands.json",$/;"	s	array:languageserver.ccls.rootPatterns
-1	coc-settings.json	/^                                "cpp",$/;"	s	array:languageserver.ccls.filetypes
 1	coc-settings.json	/^                                "markdown"$/;"	s	array:languageserver.efm.filetypes
 1	coc-settings.json	/^                "python",$/;"	s	array:coc.preferences.formatOnSaveFiletypes
 2	coc-settings.json	/^                                "--log-file",$/;"	s	array:languageserver.python.args
-2	coc-settings.json	/^                                ".vim\/",$/;"	s	array:languageserver.ccls.rootPatterns
-2	coc-settings.json	/^                                "objc",$/;"	s	array:languageserver.ccls.filetypes
 2	coc-settings.json	/^                                "plaintex",$/;"	s	array:languageserver.latex.filetypes
 2	coc-settings.json	/^                "c",$/;"	s	array:coc.preferences.formatOnSaveFiletypes
-3	coc-settings.json	/^                                ".git\/",$/;"	s	array:languageserver.ccls.rootPatterns
 3	coc-settings.json	/^                                "\/tmp\/lsp_python.log"$/;"	s	array:languageserver.python.args
 3	coc-settings.json	/^                                "context"$/;"	s	array:languageserver.latex.filetypes
-3	coc-settings.json	/^                                "objcpp"$/;"	s	array:languageserver.ccls.filetypes
 3	coc-settings.json	/^                "Markdown",$/;"	s	array:coc.preferences.formatOnSaveFiletypes
-4	coc-settings.json	/^                                ".hg\/"$/;"	s	array:languageserver.ccls.rootPatterns
 4	coc-settings.json	/^                "golang"$/;"	s	array:coc.preferences.formatOnSaveFiletypes
+<C-S-Tab>	init.vim	/^nmap <C-S-Tab> gT$/;"	m
+<C-Tab>	init.vim	/^nmap <C-Tab> gt$/;"	m
 <C-l>	init.vim	/^inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u$/;"	m
 <C-m>	init.vim	/^map <C-m> :tabedit<cr>:FZF<cr>$/;"	m
 <C-x>	init.vim	/^map <C-x> :Neoformat<CR>$/;"	m
@@ -67,6 +60,7 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 <leader>ee	init.vim	/^nmap <silent> <leader>ee :VimtexErrors<cr>$/;"	m
 <leader>gT	init.vim	/^map <leader>gT gT$/;"	m
 <leader>gg	init.vim	/^map <leader>gg :Ag<cr>$/;"	m
+<leader>gs	init.vim	/^nmap <leader>gs :Magit<cr>$/;"	m
 <leader>gt	init.vim	/^map <leader>gt gt$/;"	m
 <leader>h	init.vim	/^nmap <silent> <leader>h :History<cr>$/;"	m
 <leader>i	init.vim	/^nmap <silent> <leader>i <Plug>(coc-implementation)$/;"	m
@@ -80,6 +74,7 @@ $FZF_DEFAULT_COMMAND	init.vim	/^let $FZF_DEFAULT_COMMAND =  "find * -path '*\/\\
 <leader>td	init.vim	/^nmap <silent> <leader>td <Plug>(coc-type-definition)$/;"	m
 <leader>tn	init.vim	/^map <leader>tn :tab term<cr> A$/;"	m
 <leader>ts	init.vim	/^map <leader>ts :split<cr> :terminal<cr> A$/;"	m
+<leader>tt	init.vim	/^nmap <leader>tt :tabedit<cr>:Explore<cr>$/;"	m
 <leader>tv	init.vim	/^map <leader>tv :vsplit<cr> :terminal<cr> A$/;"	m
 <leader>wd	init.vim	/^map <leader>wd :q<cr>$/;"	m
 <leader>wh	init.vim	/^map <leader>wh :wincmd h<cr>$/;"	m
@@ -101,8 +96,6 @@ args	coc-settings.json	/^                        "args": [$/;"	a	object:language
 args	coc-settings.json	/^                        "args": [$/;"	a	object:languageserver.python
 args	coc-settings.json	/^                        "args": [],$/;"	a	object:languageserver.efm
 bash	coc-settings.json	/^                "bash": {$/;"	o	object:languageserver
-cache	coc-settings.json	/^                                "cache": {$/;"	o	object:languageserver.ccls.initializationOptions
-ccls	coc-settings.json	/^                "ccls": {$/;"	o	object:languageserver
 coc.preferences.codeLens.enable	coc-settings.json	/^        "coc.preferences.codeLens.enable": true,$/;"	b
 coc.preferences.formatOnSaveFiletypes	coc-settings.json	/^        "coc.preferences.formatOnSaveFiletypes": [$/;"	a
 coc.source.around.enable	coc-settings.json	/^        "coc.source.around.enable": true,$/;"	b
@@ -113,7 +106,6 @@ coc.source.file.enable	coc-settings.json	/^        "coc.source.file.enable": tru
 coc.source.file.priority	coc-settings.json	/^        "coc.source.file.priority": 0,$/;"	n
 coc.source.vimtex	coc-settings.json	/^        "coc.source.vimtex": true,$/;"	b
 command	coc-settings.json	/^                        "command": "\/home\/dieraca\/.languageservers\/bash-language-server\/ser/;"	s	object:languageserver.bash
-command	coc-settings.json	/^                        "command": "ccls",$/;"	s	object:languageserver.ccls
 command	coc-settings.json	/^                        "command": "docker-langserver",$/;"	s	object:languageserver.dockerfile
 command	coc-settings.json	/^                        "command": "efm-langserver",$/;"	s	object:languageserver.efm
 command	coc-settings.json	/^                        "command": "go-langserver",$/;"	s	object:languageserver.golang
@@ -122,7 +114,6 @@ command	coc-settings.json	/^                        "command": "python3.6",$/;"	
 commandPath	coc-settings.json	/^                                        "commandPath": "",$/;"	s	object:languageserver.python.settings.pyls
 configurationSources	coc-settings.json	/^                                        "configurationSources": [$/;"	a	object:languageserver.python.settings.pyls
 diagnosticsEnabled	coc-settings.json	/^                                "diagnosticsEnabled": true,$/;"	b	object:languageserver.golang.initializationOptions
-directory	coc-settings.json	/^                                        "directory": "\/tmp\/ccls"$/;"	s	object:languageserver.ccls.initializationOptions.cache
 dockerfile	coc-settings.json	/^                "dockerfile": {$/;"	o	object:languageserver
 efm	coc-settings.json	/^                "efm": {$/;"	o	object:languageserver
 enable	coc-settings.json	/^                                        "enable": true,$/;"	b	object:languageserver.python.settings.pyls
@@ -140,7 +131,6 @@ enabled	coc-settings.json	/^                                                    
 enabled	coc-settings.json	/^                                                        "enabled": true,$/;"	b	object:languageserver.python.settings.pyls.plugins.mccabe
 filetypes	coc-settings.json	/^                        "filetypes": ["dockerfile"],$/;"	a	object:languageserver.dockerfile
 filetypes	coc-settings.json	/^                        "filetypes": [$/;"	a	object:languageserver.bash
-filetypes	coc-settings.json	/^                        "filetypes": [$/;"	a	object:languageserver.ccls
 filetypes	coc-settings.json	/^                        "filetypes": [$/;"	a	object:languageserver.efm
 filetypes	coc-settings.json	/^                        "filetypes": [$/;"	a	object:languageserver.golang
 filetypes	coc-settings.json	/^                        "filetypes": [$/;"	a	object:languageserver.latex
@@ -200,7 +190,6 @@ gocodeCompletionEnabled	coc-settings.json	/^                                "goc
 golang	coc-settings.json	/^                "golang": {$/;"	o	object:languageserver
 html.enable	coc-settings.json	/^        "html.enable": true,$/;"	b
 ignoredRootPaths	coc-settings.json	/^                        "ignoredRootPaths": [$/;"	a	object:languageserver.bash
-initializationOptions	coc-settings.json	/^                        "initializationOptions": {$/;"	o	object:languageserver.ccls
 initializationOptions	coc-settings.json	/^                        "initializationOptions": {$/;"	o	object:languageserver.golang
 j	init.vim	/^nnoremap j gj$/;"	m
 java.jdt.ls.vmargs	coc-settings.json	/^        "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8 -noverify -Xmx1G -XX:+UseG1GC -XX:+UseStrin/;"	s
@@ -224,11 +213,11 @@ pydocstyle	coc-settings.json	/^                                                "
 pyflakes	coc-settings.json	/^                                                "pyflakes": {$/;"	o	object:languageserver.python.settings.pyls.plugins
 pyls	coc-settings.json	/^                                "pyls": {$/;"	o	object:languageserver.python.settings
 python	coc-settings.json	/^                "python": {$/;"	o	object:languageserver
-rootPatterns	coc-settings.json	/^                        "rootPatterns": [$/;"	a	object:languageserver.ccls
 rope_completion	coc-settings.json	/^                                                "rope_completion": {$/;"	o	object:languageserver.python.settings.pyls.plugins
 rust-client.logToFile	coc-settings.json	/^        "rust-client.logToFile": true,$/;"	b
 rust.show_hover_context	coc-settings.json	/^        "rust.show_hover_context": true,$/;"	b
 rust.show_warnings	coc-settings.json	/^        "rust.show_warnings": true,$/;"	b
+rust.unstable_features	coc-settings.json	/^        "rust.unstable_features": true,$/;"	b
 s:first_run	init.vim	/^    let s:first_run = 1$/;"	v
 s:first_run	init.vim	/^let s:first_run = 0$/;"	v
 s:show_documentation	init.vim	/^function! s:show_documentation()$/;"	f
