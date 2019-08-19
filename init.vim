@@ -160,10 +160,12 @@ vnoremap <LeftRelease> "*ygv
 "but i still do want scroll and cursor clicking
 set mouse=ni
 call plug#begin('~/.vim/plugged')
+Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
 Plug 'chrisbra/Colorizer' "highlight hex codes with the color they are
 Plug 'isaacmorneau/vim-update-daily' "update vim plugins once a day (yea i made this one)
 Plug 'joshdick/onedark.vim' "main color theme
+Plug 'sjl/gundo.vim' " nice graph
 Plug 'luochen1990/rainbow' "rainbow highlight brackets
 Plug 'junegunn/fzf' "fuzzy jumping arround
 Plug 'junegunn/fzf.vim'
@@ -192,6 +194,8 @@ Plug 'tpope/vim-speeddating'
 "Plug 'neoclide/coc.nvim'
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 
+"Plug 'aurieh/discord.nvim', { 'do': ':UpdateRemotePlugins'}
+
 " extra commands
 Plug 'tpope/vim-eunuch'
 
@@ -201,6 +205,8 @@ Plug 'huawenyu/neogdb.vim'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 Plug 'SirVer/ultisnips'
+Plug 'rhysd/vim-llvm'
+Plug 'kylelaker/riscv.vim'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger='<c-h>'
@@ -249,7 +255,7 @@ map <leader>bb :Buffers<cr>
 map <leader>bl :Lines<cr>
 map <leader>bt :BTags<cr>
 map <leader>bm :Marks<cr>
-"map <leader>bN :FZF<cr>
+map <leader><leader> :FZF<cr>
 map <leader>gg :Ag<cr>
 nmap <silent> <leader>h :History<cr>
 
@@ -437,4 +443,22 @@ nmap <C-Tab> gt
 nmap <C-S-Tab> gT
 nmap <leader>tt :tabedit<cr>:Explore<cr>
 
+nmap <C-j> :tabprevious<cr>
+nmap <C-k> :tabnext<cr>
+
 nmap <leader>gs :MagitOnly<cr>
+nmap <C-Backspace> :call TermOpen('~/.config/nvim/ranger/ranger.py')<CR>
+
+" for markdown
+nnoremap <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>
+nnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
+nnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
+vnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
+vnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
+
+
+set fillchars=vert:┃ " for vsplits
+
+set fillchars+=fold:· " for folds
+
+hi VertSplit guifg=#FF5C8F

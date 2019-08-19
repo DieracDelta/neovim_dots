@@ -23,6 +23,25 @@
         "coc.source.vimtex": true,
         "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8 -noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication",
         "languageserver": {
+                "clangd": {
+                        "command": "clangd",
+                        "args": ["--background-index"],
+                        "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+                        "filetypes": ["c", "cpp", "objc", "objcpp"]
+                },
+                "haskell": {
+                        "command": "hie-wrapper",
+                        "rootPatterns": [".stack.yaml", "cabal.config", "package.yaml"],
+                        "filetypes": ["hs", "lhs", "haskell"],
+                        "initializationOptions": {},
+                        "settings": {
+                                "languageServerHaskell": {
+                                        "hlintOn": false,
+                                        "maxNumberOfProblems": 10,
+                                        "completionSnippetsOn": true
+                                }
+                        }
+                },
                 "python": {
                         "command": "python3.6",
                         "args": [
