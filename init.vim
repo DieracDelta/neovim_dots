@@ -37,6 +37,7 @@ tnoremap <Esc> <C-\><C-n>
 
 "line numbers
 set number
+set relativenumber
 "whats open?
 set title
 "dont care if its not valid,dont tell me
@@ -158,7 +159,7 @@ nnoremap k gk
 vnoremap <LeftRelease> "*ygv
 "i dont actually want visual mode mouse control
 "but i still do want scroll and cursor clicking
-set mouse=ni
+set mouse=nv
 call plug#begin('~/.vim/plugged')
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
@@ -172,7 +173,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'isaacmorneau/vim-simple-sessions' "sessions
 Plug 'neomake/neomake' "do full syntax checking for most languages
 Plug 'ntpeters/vim-better-whitespace' "show when there is gross trailing whitespace
-"Plug 'sbdchd/neoformat' "allows the formatting of code sanely
 Plug 'sheerun/vim-polyglot' "syntax highlighting"
 let g:polyglot_disabled = ['latex']
 Plug 'tpope/vim-surround' "change things surounding like ()->[]
@@ -292,25 +292,6 @@ let g:rainbow_active = 1
 "custom command to also update remote plugins for stuff like deoplete
 let g:update_daily = 'PU'
 
-" [neoformat]
-map <C-x> :Neoformat<CR>
-"good for debugging broken formatters
-let g:neoformat_verbose = 1
-let g:neoformat_basic_format_align = 1
-let g:neoformat_basic_format_retab = 1
-let g:neoformat_basic_format_trim = 1
-let g:neoformat_c_clang_format = {
-                        \ 'exe': 'clang-format',
-                        \ 'args': ['-style=~/.clang-format'],
-                        \ }
-let g:neoformat_cpp_clang_format = {
-                        \ 'exe': 'clang-format',
-                        \ 'args': ['-style=~/.clang-format'],
-                        \ }
-
-let g:neoformat_enabled_c = ['clangformat']
-let g:neoformat_enabled_cpp = ['clangformat']
-
 "[Airline]
 set laststatus=2
 let g:airline_theme='onedark'
@@ -377,8 +358,8 @@ map <leader>bD :bdelete!<cr>
 
 map <leader>mb :VimtexCompile<cr>
 
-inoremap <C-z> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
-nnoremap <C-z> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+inoremap <C-p> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+nnoremap <C-p> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
 "Cntrl + l to fix previous spelling mistake
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
@@ -462,3 +443,18 @@ set fillchars=vert:┃ " for vsplits
 set fillchars+=fold:· " for folds
 
 hi VertSplit guifg=#FF5C8F
+
+nnoremap <F8>  :call S_copyPasteMode()<cr>
+nnoremap <F9> :call S_exitCopyPasteMode()<cr>
+
+function S_copyPasteMode()
+        GitGutterDisable
+        set nonumber
+        set norelativenumber
+endfunction
+
+function S_exitCopyPasteMode()
+        GitGutterEnable
+        set relativenumber
+        set number
+endfunction
