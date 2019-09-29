@@ -161,6 +161,7 @@ vnoremap <LeftRelease> "*ygv
 "but i still do want scroll and cursor clicking
 set mouse=nv
 call plug#begin('~/.vim/plugged')
+Plug 'liuchengxu/vista.vim'
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
 Plug 'chrisbra/Colorizer' "highlight hex codes with the color they are
@@ -178,16 +179,18 @@ let g:polyglot_disabled = ['latex']
 Plug 'tpope/vim-surround' "change things surounding like ()->[]
 Plug 'vim-airline/vim-airline' "a statusbar
 Plug 'vim-airline/vim-airline-themes' "themes for the statusbar
-Plug 'majutsushi/tagbar'
 Plug 'vim-syntastic/syntastic'
 Plug 'ludovicchabant/vim-gutentags'
 "Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
+Plug 'Yggdroot/indentLine'
 
 Plug 'jreybert/vimagit'
 "Plug 'jceb/vim-orgmode'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-speeddating'
+Plug 'glacambre/firenvim'
+Plug 'liuchengxu/space-vim-theme'
 
 " coc.nvim
 " to edit config file, :CocConfig
@@ -243,8 +246,6 @@ Plug 'Raimondi/delimitMate'
 
 call plug#end()
 
-colorscheme onedark
-
 "[fzf]
 "map <C-m> FZF<CR>
 "map <s-enter> :FZF<CR>
@@ -256,6 +257,7 @@ map <leader>bl :Lines<cr>
 map <leader>bt :BTags<cr>
 map <leader>bm :Marks<cr>
 map <leader><leader> :FZF<cr>
+map <leader>pp :pwd<cr>
 map <leader>gg :Ag<cr>
 nmap <silent> <leader>h :History<cr>
 
@@ -300,18 +302,18 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 " unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_left_sep = ''
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.paste = ''
+let g:airline_symbols.paste = ''
+let g:airline_symbols.paste = ''
+let g:airline_symbols.whitespace = ''
 let g:airline#extensions#coc#enabled = 1
 
 let g:airline#extensions#tabline#enabled = 1
@@ -416,6 +418,9 @@ nmap <silent> <leader>d <Plug>(coc-definition)
 nmap <silent> <leader>td <Plug>(coc-type-definition)
 nmap <silent> <leader>i <Plug>(coc-implementation)
 nmap <silent> <leader>r <Plug>(coc-references)
+vnoremap <leader>yc y:call NERDComment('x', 'Toggle')<cr>p
+nmap <leader>kk :Vista!!<cr>
+
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 nmap <leader>l :Format<cr>
@@ -426,6 +431,12 @@ nmap <leader>tt :tabedit<cr>:Explore<cr>
 
 nmap <C-j> :tabprevious<cr>
 nmap <C-k> :tabnext<cr>
+" don't work
+"nmap <C-S-k> :bn<cr>
+"nmap <C-S-j> :bp<cr>
+nmap <C-l> :tabm +1<cr>
+nmap <C-h> :tabm -1<cr>
+
 
 nmap <leader>gs :MagitOnly<cr>
 nmap <C-Backspace> :call TermOpen('~/.config/nvim/ranger/ranger.py')<CR>
@@ -437,6 +448,7 @@ nnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)
 vnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
 vnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
 
+colorscheme onedark
 
 set fillchars=vert:┃ " for vsplits
 
@@ -458,3 +470,86 @@ function S_exitCopyPasteMode()
         set relativenumber
         set number
 endfunction
+" TODO: If current line meet the  pattern '^\s*\usepackage{[a-zA-Z]+}.*$' then the mapping should use the 'texdoc' command to obtain the package documentation of '[a-zA-Z]+'.
+nnoremap <buffer> K :silent exe "!google-chrome --new-window --args 'https://www.google.com/search?q=latex+'" . expand("<cword>") . " &"<CR>
+
+" firenvim config
+let g:firenvim_config = {
+    \ 'localSettings': {
+        \ '.*': {
+            \ 'selector': 'textarea',
+            \ 'priority': 0,
+        \ }
+    \ }
+\ }
+
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
+
+" By default vista.vim never run if you don't call it explicitly.
+"
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+" vista stuff
+let g:vista_default_executive = 'coc'
+let g:vista#renderer#icons = {
+\   "typeParameter": "->",
+\   "function": "->",
+\   "method": "->",
+\   "field": "->",
+\   "variable": "->",
+\   "constant": "->",
+\   "struct": "->",
+\  }
+
+
+" indent stuff
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_color_term = 39
+let g:indentLine_bgcolor_term = 202
+let g:indentLine_color_dark = 1
+
+" latex specific things
+"au BufReadPost,BufNewFile *.tex setlocal fdm=expr fde=getline(v:lnum)=~#'^\\\\Start[Doc\|Section\|SubSection]'?'>1':getline(v:lnum)=~#'^\\\\End[Doc\|Section\|SubSection]$'?'<1':'='
+"au BufReadPost,BufNewFile *.tex setlocal fdm=expr fde=getline(v:lnum)=~#'^\\\\StartSubSection.*'?'>1':getline(v:lnum)=~#'^\\\\EndSubSection$'?'<1':'='
+fu! s:snr() abort
+    return matchstr(expand('<sfile>'), '.*\zs<SNR>\d\+_')
+endfu
+let &l:fdm = 'expr'
+let &l:fde = s:snr().'fold_macros()'
+fu! s:fold_macros() abort
+    let line = getline(v:lnum)
+    if line =~# '^\\BeginMacro1'
+        return '>1'
+    elseif line =~# '^\\BeginMacro2'
+        return '>2'
+    elseif line =~# '^\\EndMacro1'
+        return '<1'
+    elseif line =~# '^\\EndMacro2'
+        return '<2'
+    else
+        return '='
+    endif
+endfu
+
+let g:airline_section_b = ""
+let g:airline_detect_modified=1
+let g:airline_detect_paste=0
+let g:airline_detect_crypt=0
+let g:airline_detect_spell=0
+let g:airline_detect_spelllang=0
+let g:airline_symbols_ascii = 1
+let g:airline_skip_empty_sections = 1
+let g:airline_highlighting_cache = 1
+let g:airline_section_y  = ""
+let g:airline_section_z  = "%P"
+
+
+
+
+
