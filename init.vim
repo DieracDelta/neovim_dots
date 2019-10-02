@@ -161,6 +161,7 @@ vnoremap <LeftRelease> "*ygv
 "but i still do want scroll and cursor clicking
 set mouse=nv
 call plug#begin('~/.vim/plugged')
+Plug 'junegunn/vim-peekaboo'
 Plug 'liuchengxu/vista.vim'
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
@@ -549,7 +550,37 @@ let g:airline_highlighting_cache = 1
 let g:airline_section_y  = ""
 let g:airline_section_z  = "%P"
 
+fu! s:snr() abort
+    return matchstr(expand('<sfile>'), '.*\zs<SNR>\d\+_')
+endfu
+
+let &l:fdm = 'expr'
+let &l:fde = s:snr().'fold_macros()'
+fu! s:fold_macros() abort
+    let line = getline(v:lnum)
+    if line =~# '^\\StartDoc'
+        return '>1'
+    elseif line =~# '^\\StartSection'
+        return '>2'
+    elseif line =~# '^\\StartSubSection'
+        return '>3'
+    elseif line =~# '^\\Paragraph'
+        return '>4'
+    elseif line =~# '^\\EndParagraph'
+        return '<4'
+    elseif line =~# '^\\EndSection'
+        return '<2'
+    elseif line =~# '^\\EndSubSection'
+        return '<3'
+    elseif line =~# '^\\EndDoc'
+        return '<1'
+    else
+        return '='
+    endif
+endfu
 
 
+" really just to help me remember, with shitty regex:
+" peekaboo: ("|@)(space)?
 
 
