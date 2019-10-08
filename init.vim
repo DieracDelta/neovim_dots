@@ -1,4 +1,5 @@
 " TAKEN FROM ISAACS CONFIG (https://github.com/isaacmorneau/dotfiles/blob/master/.vim/vimrc)
+let g:tex_flavor = 'latex'
 "Base vim setup
 " Jump to last open
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -161,7 +162,9 @@ vnoremap <LeftRelease> "*ygv
 "but i still do want scroll and cursor clicking
 set mouse=nv
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/vim-peekaboo'
+Plug 'Ron89/thesaurus_query.vim'
+Plug 'RRethy/vim-illuminate'
+"Plug 'junegunn/vim-peekaboo'
 Plug 'liuchengxu/vista.vim'
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
@@ -220,7 +223,7 @@ let g:UltiSnipsSnippetDirectories=['UltiSnips', '/home/dieraca/.config/nvim/snip
 
 "latex setup
 Plug 'lervag/vimtex'
-let g:tex_flavor='latex'
+let g:tex_flavor = 'latex'
 let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
@@ -235,6 +238,17 @@ let g:vimtex_compiler_latexmk = {
     \   '-interaction=nonstopmode',
     \ ]
     \}
+" my macros don't work withtectonic not sure why...
+"let g:vimtex_compiler_latexmk = {
+    "\ 'options' : [
+    "\   '-pdf',
+    "\   '-pdflatex="tectonic"',
+    "\   '-verbose',
+    "\   '-file-line-error',
+    "\   '-synctex=1',
+    "\   '-interaction=nonstopmode',
+    "\ ]
+    "\}
 
 " auto insert delimiters
 Plug 'Raimondi/delimitMate'
@@ -259,15 +273,15 @@ map <leader>bt :BTags<cr>
 map <leader>bm :Marks<cr>
 map <leader><leader> :FZF<cr>
 map <leader>pp :pwd<cr>
-map <leader>gg :Ag<cr>
+map <leader>gg :Rg<cr>
 nmap <silent> <leader>h :History<cr>
 
 
 " The Silver Searcher
-if executable('ag')
-        let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
-        set grepprg=ag\ --nogroup\ --nocolor
-endif
+"if executable('ag')
+        "let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+        "set grepprg=ag\ --nogroup\ --nocolor
+"endif
 
 "[Easy Align]
 "Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -420,6 +434,10 @@ nmap <silent> <leader>td <Plug>(coc-type-definition)
 nmap <silent> <leader>i <Plug>(coc-implementation)
 nmap <silent> <leader>r <Plug>(coc-references)
 vnoremap <leader>yc y:call NERDComment('x', 'Toggle')<cr>p
+vnoremap <leader>wc :w !detex \| wc -w<CR>
+nmap <leader>ww :OnlineThesaurusCurrentWord<CR>
+"vnoremap <leader>ww :w !detex \| wc -w<CR>
+
 nmap <leader>kk :Vista!!<cr>
 
 " Use `:Format` to format current buffer
@@ -516,27 +534,6 @@ let g:indentLine_bgcolor_term = 202
 let g:indentLine_color_dark = 1
 
 " latex specific things
-"au BufReadPost,BufNewFile *.tex setlocal fdm=expr fde=getline(v:lnum)=~#'^\\\\Start[Doc\|Section\|SubSection]'?'>1':getline(v:lnum)=~#'^\\\\End[Doc\|Section\|SubSection]$'?'<1':'='
-"au BufReadPost,BufNewFile *.tex setlocal fdm=expr fde=getline(v:lnum)=~#'^\\\\StartSubSection.*'?'>1':getline(v:lnum)=~#'^\\\\EndSubSection$'?'<1':'='
-fu! s:snr() abort
-    return matchstr(expand('<sfile>'), '.*\zs<SNR>\d\+_')
-endfu
-let &l:fdm = 'expr'
-let &l:fde = s:snr().'fold_macros()'
-fu! s:fold_macros() abort
-    let line = getline(v:lnum)
-    if line =~# '^\\BeginMacro1'
-        return '>1'
-    elseif line =~# '^\\BeginMacro2'
-        return '>2'
-    elseif line =~# '^\\EndMacro1'
-        return '<1'
-    elseif line =~# '^\\EndMacro2'
-        return '<2'
-    else
-        return '='
-    endif
-endfu
 
 let g:airline_section_b = ""
 let g:airline_detect_modified=1
@@ -550,37 +547,47 @@ let g:airline_highlighting_cache = 1
 let g:airline_section_y  = ""
 let g:airline_section_z  = "%P"
 
-fu! s:snr() abort
-    return matchstr(expand('<sfile>'), '.*\zs<SNR>\d\+_')
-endfu
-
-let &l:fdm = 'expr'
-let &l:fde = s:snr().'fold_macros()'
-fu! s:fold_macros() abort
-    let line = getline(v:lnum)
-    if line =~# '^\\StartDoc'
-        return '>1'
-    elseif line =~# '^\\StartSection'
-        return '>2'
-    elseif line =~# '^\\StartSubSection'
-        return '>3'
-    elseif line =~# '^\\Paragraph'
-        return '>4'
-    elseif line =~# '^\\EndParagraph'
-        return '<4'
-    elseif line =~# '^\\EndSection'
-        return '<2'
-    elseif line =~# '^\\EndSubSection'
-        return '<3'
-    elseif line =~# '^\\EndDoc'
-        return '<1'
-    else
-        return '='
-    endif
-endfu
+"fu! s:snr() abort
+"    return matchstr(expand('<sfile>'), '.*\zs<SNR>\d\+_')
+"endfu
+"
+"let &l:fdm = 'expr'
+"let &l:fde = s:snr().'fold_macros()'
+"fu! s:fold_macros() abort
+"    let line = getline(v:lnum)
+"    if line =~# '^\\StartDoc'
+"        return '>1'
+"    elseif line =~# '^\\StartSection'
+"        return '>2'
+"    elseif line =~# '^\\StartSubSection'
+"        return '>3'
+"    elseif line =~# '^\\Paragraph'
+"        return '>4'
+"    elseif line =~# '^\\EndParagraph'
+"        return '<4'
+"    elseif line =~# '^\\EndSection'
+"        return '<2'
+"    elseif line =~# '^\\EndSubSection'
+"        return '<3'
+"    elseif line =~# '^\\EndDoc'
+"        return '<1'
+"    else
+"        return '='
+"    endif
+"endfu
 
 
 " really just to help me remember, with shitty regex:
 " peekaboo: ("|@)(space)?
 
+
+
+autocmd BufReadPre *.tex let b:vimtex_main = 'main.tex'
+let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+let g:indentLine_concealcursor = ''
+let g:indentLine_conceallevel = 1
+let g:Illuminate_delay = 0
+hi CursorLine gui=underline cterm=underline
+
+nnoremap <Leader>t :ThesaurusQueryReplaceCurrentWord<CR>
 

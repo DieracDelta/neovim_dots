@@ -43,6 +43,33 @@ snippet bg "\textbf{}" A
 \textbf{$1}
 endsnippet
 
+snippet par "\Paragraph" A
+\Paragraph{%
+$1 %
+}{%
+$2 %
+}{}
+\EndParagraph
+endsnippet
+
+snippet subsec "\SubSection" A
+\StartSubSection{%
+$1 %
+}{%
+$2 %
+}{}
+\EndSubSection
+endsnippet
+
+snippet sec "\Section" A
+\StartSection{%
+$1 %
+}{%
+$2 %
+}{}
+\EndSection
+endsnippet
+
 snippet rust
 \begin{figure}[ht]
   \begin{minted}[autogobble]{rust}
@@ -52,6 +79,13 @@ snippet rust
   \label{fig:$3}
 \end{figure}
 endsnippet
+
+snippet itemm
+	\\begin{itemize} %
+		\\item $0 %
+	\\end{itemize} %
+endsnippet
+
 
 snippet dm "Math" wA
 \[
