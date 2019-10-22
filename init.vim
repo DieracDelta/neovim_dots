@@ -86,8 +86,11 @@ set fileencoding=utf-8
 set fileencodings=utf-8
 set bomb
 set binary
+set matchpairs+=<:>
 "tabs are bad, also set this after encoding or weird things happen
 set expandtab
+let g:highlightedyank_highlight_duration = 400
+set shell=/bin/zsh
 "tell me whats going on
 "only enable when stuff breaks and you dont know why
 "let &verbose = 1
@@ -165,12 +168,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'Ron89/thesaurus_query.vim'
 Plug 'RRethy/vim-illuminate'
 "Plug 'junegunn/vim-peekaboo'
-Plug 'liuchengxu/vista.vim'
+"Plug 'liuchengxu/vista.vim'
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
-Plug 'chrisbra/Colorizer' "highlight hex codes with the color they are
 Plug 'isaacmorneau/vim-update-daily' "update vim plugins once a day (yea i made this one)
-Plug 'joshdick/onedark.vim' "main color theme
+"Plug 'joshdick/onedark.vim' "main color theme
 Plug 'sjl/gundo.vim' " nice graph
 Plug 'luochen1990/rainbow' "rainbow highlight brackets
 Plug 'junegunn/fzf' "fuzzy jumping arround
@@ -276,12 +278,39 @@ map <leader>pp :pwd<cr>
 map <leader>gg :Rg<cr>
 nmap <silent> <leader>h :History<cr>
 
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let height = float2nr(30)
+  let width = float2nr(100)
+  let horizontal = float2nr((&columns - width) / 2)
+  let vertical = 1
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': 3,
+        \ 'col': 20,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'style': 'minimal'
+        \ }
+
+  call nvim_open_win(buf, v:true, opts)
+endfunction
+
+
 
 " The Silver Searcher
 "if executable('ag')
         "let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
         "set grepprg=ag\ --nogroup\ --nocolor
 "endif
+
+" https://minsw.github.io/fzf-color-picker/
+let $FZF_DEFAULT_OPTS = ' --color=fg:#d20af5,bg:#060847,hl:#21609e --color=fg+:#f01616,bg+:#060847,hl+:#21609e --color=info:#4c5cb8,prompt:#9e5474,pointer:#ff5e00 --color=marker:#faa064,spinner:#d20af5,header:#19ffff '
 
 "[Easy Align]
 "Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -307,7 +336,7 @@ let g:rainbow_active = 1
 "
 ""[update-daily]
 "custom command to also update remote plugins for stuff like deoplete
-let g:update_daily = 'PU'
+"let g:update_daily = 'PU'
 
 "[Airline]
 set laststatus=2
@@ -379,7 +408,7 @@ inoremap <C-p> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" 
 nnoremap <C-p> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
 "Cntrl + l to fix previous spelling mistake
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+inoremap <C-l> <c-g>u<Esc>[s1z=`]i<c-g>u
 "latex sane tabs + spelling
 autocmd FileType tex setlocal ts=2 sw=2 sts=0 expandtab spell
 let g:vimtex_complete_enabled = 1
@@ -438,7 +467,7 @@ vnoremap <leader>wc :w !detex \| wc -w<CR>
 nmap <leader>ww :OnlineThesaurusCurrentWord<CR>
 "vnoremap <leader>ww :w !detex \| wc -w<CR>
 
-nmap <leader>kk :Vista!!<cr>
+"nmap <leader>kk :Vista!!<cr>
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -466,8 +495,6 @@ nnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)
 nnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
 vnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
 vnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
-
-colorscheme onedark
 
 set fillchars=vert:┃ " for vsplits
 
@@ -502,9 +529,9 @@ let g:firenvim_config = {
     \ }
 \ }
 
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
+"function! NearestMethodOrFunction() abort
+  "return get(b:, 'vista_nearest_method_or_function', '')
+"endfunction
 
 set statusline+=%{NearestMethodOrFunction()}
 
@@ -512,26 +539,21 @@ set statusline+=%{NearestMethodOrFunction()}
 "
 " If you want to show the nearest function in your statusline automatically,
 " you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+"autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " vista stuff
-let g:vista_default_executive = 'coc'
-let g:vista#renderer#icons = {
-\   "typeParameter": "->",
-\   "function": "->",
-\   "method": "->",
-\   "field": "->",
-\   "variable": "->",
-\   "constant": "->",
-\   "struct": "->",
-\  }
+"let g:vista_default_executive = 'coc'
+"let g:vista#renderer#icons = {
+"\   "typeParameter": "->",
+"\   "function": "->",
+"\   "method": "->",
+"\   "field": "->",
+"\   "variable": "->",
+"\   "constant": "->",
+"\   "struct": "->",
+"\  }
 
 
-" indent stuff
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-let g:indentLine_color_term = 39
-let g:indentLine_bgcolor_term = 202
-let g:indentLine_color_dark = 1
 
 " latex specific things
 
@@ -591,3 +613,33 @@ hi CursorLine gui=underline cterm=underline
 
 nnoremap <Leader>t :ThesaurusQueryReplaceCurrentWord<CR>
 
+
+" thing to show all hl groups
+nmap <leader>po :so $VIMRUNTIME/syntax/hitest.vim<CR>
+nmap <leader>pp :call <SID>SynStack()<CR>
+nmap <leader>pp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+colorscheme azure
+
+" this would be cool if inactive window included other details of the inactive
+" window : P
+" active window highlighting
+"hi ActiveWindow guifg=NONE guibg=#181d26 gui=NONE
+"hi InactiveWindow guifg=NONE guibg=#151810 gui=NONE
+
+ ""Call method on window enter
+"augroup WindowManagement
+  "autocmd!
+  "autocmd WinEnter * call Handle_Win_Enter()
+"augroup END
+
+"" Change highlight group of active/inactive windows
+"function! Handle_Win_Enter()
+  "setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
+"endfunction

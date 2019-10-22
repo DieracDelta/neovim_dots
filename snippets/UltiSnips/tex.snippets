@@ -43,7 +43,7 @@ snippet bg "\textbf{}" A
 \textbf{$1}
 endsnippet
 
-snippet par "\Paragraph" A
+snippet par "\Paragraph"
 \Paragraph{%
 $1 %
 }{%
@@ -52,7 +52,7 @@ $2 %
 \EndParagraph
 endsnippet
 
-snippet subsec "\SubSection" A
+snippet subsec "\SubSection"
 \StartSubSection{%
 $1 %
 }{%
@@ -61,7 +61,7 @@ $2 %
 \EndSubSection
 endsnippet
 
-snippet sec "\Section" A
+snippet sec "\Section"
 \StartSection{%
 $1 %
 }{%
@@ -84,6 +84,14 @@ snippet itemm
 	\\begin{itemize} %
 		\\item $0 %
 	\\end{itemize} %
+endsnippet
+
+snippet cm "\xmark" A
+\checkmark $0
+endsnippet
+
+snippet xm "\xmark" A
+\xmark $0
 endsnippet
 
 
