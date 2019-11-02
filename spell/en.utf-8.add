@@ -55,3 +55,11 @@ monomorphized
 Monomorphization
 monomorphization
 scheduler
+mstatus
+mie
+mscratch
+mepc
+mtval
+mtvec
+transition
+transition

@@ -172,7 +172,6 @@ Plug 'RRethy/vim-illuminate'
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
 Plug 'isaacmorneau/vim-update-daily' "update vim plugins once a day (yea i made this one)
-"Plug 'joshdick/onedark.vim' "main color theme
 Plug 'sjl/gundo.vim' " nice graph
 Plug 'luochen1990/rainbow' "rainbow highlight brackets
 Plug 'junegunn/fzf' "fuzzy jumping arround
@@ -277,6 +276,7 @@ map <leader><leader> :FZF<cr>
 map <leader>pp :pwd<cr>
 map <leader>gg :Rg<cr>
 nmap <silent> <leader>h :History<cr>
+nmap <silent> <F5> :w<cr>
 
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
@@ -300,14 +300,6 @@ function! FloatingFZF()
 
   call nvim_open_win(buf, v:true, opts)
 endfunction
-
-
-
-" The Silver Searcher
-"if executable('ag')
-        "let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
-        "set grepprg=ag\ --nogroup\ --nocolor
-"endif
 
 " https://minsw.github.io/fzf-color-picker/
 let $FZF_DEFAULT_OPTS = ' --color=fg:#d20af5,bg:#060847,hl:#21609e --color=fg+:#f01616,bg+:#060847,hl+:#21609e --color=info:#4c5cb8,prompt:#9e5474,pointer:#ff5e00 --color=marker:#faa064,spinner:#d20af5,header:#19ffff '
@@ -490,11 +482,11 @@ nmap <leader>gs :MagitOnly<cr>
 nmap <C-Backspace> :call TermOpen('~/.config/nvim/ranger/ranger.py')<CR>
 
 " for markdown
-nnoremap <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>
-nnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
-nnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
-vnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
-vnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
+"nnoremap <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>
+"nnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
+"nnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
+"vnoremap <silent> <F5> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[<space>]<space>/<CR>0f]h
+"vnoremap <silent> <F6> :s/^\s*\(-<space>\\|\*<space>\)\?\zs\(\[[^\]]*\]<space>\)\?\ze./[x]<space>/<CR>0f]h
 
 set fillchars=vert:┃ " for vsplits
 
@@ -643,3 +635,7 @@ colorscheme azure
 "function! Handle_Win_Enter()
   "setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
 "endfunction
+
+" adds in coc ultisnip CR completion
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
+   \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"

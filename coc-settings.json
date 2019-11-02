@@ -13,6 +13,7 @@
         "rust.show_warnings": true,
         "rust.show_hover_context": true,
         "rust.unstable_features": true,
+        "suggest.snippetIndicator": "@",
         "coc.preferences.formatOnSaveFiletypes": [
                 "rust",
                 "python",
