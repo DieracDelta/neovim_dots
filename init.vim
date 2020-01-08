@@ -171,7 +171,6 @@ Plug 'RRethy/vim-illuminate'
 "Plug 'liuchengxu/vista.vim'
 Plug 'fabi1cazenave/termopen.vim'
 Plug 'airblade/vim-gitgutter' " The git gutter being the extra column tracking git changes by numbering
-Plug 'isaacmorneau/vim-update-daily' "update vim plugins once a day (yea i made this one)
 Plug 'sjl/gundo.vim' " nice graph
 Plug 'luochen1990/rainbow' "rainbow highlight brackets
 Plug 'junegunn/fzf' "fuzzy jumping arround
@@ -180,7 +179,8 @@ Plug 'isaacmorneau/vim-simple-sessions' "sessions
 Plug 'neomake/neomake' "do full syntax checking for most languages
 Plug 'ntpeters/vim-better-whitespace' "show when there is gross trailing whitespace
 Plug 'sheerun/vim-polyglot' "syntax highlighting"
-let g:polyglot_disabled = ['latex']
+let g:polyglot_disabled = ['latex', 'c/c++', 'c++11']
+"Plug 'arakashic/chromatica.nvim'
 Plug 'tpope/vim-surround' "change things surounding like ()->[]
 Plug 'vim-airline/vim-airline' "a statusbar
 Plug 'vim-airline/vim-airline-themes' "themes for the statusbar
@@ -195,7 +195,11 @@ Plug 'jreybert/vimagit'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-speeddating'
 Plug 'glacambre/firenvim'
-Plug 'liuchengxu/space-vim-theme'
+" nice way to make your own custom text objects
+Plug 'kana/vim-textobj-user'
+" adds v for between underscores
+Plug 'Julian/vim-textobj-variable-segment'
+
 
 " coc.nvim
 " to edit config file, :CocConfig
@@ -229,13 +233,20 @@ let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
+"let g:vimtex_compiler_latexmk = {
+    "\ 'options' : [
+    "\   '-pdf',
+    "\   '-pdflatex="xelatex --shell-escape %O %S"',
+    "\   '-verbose',
+    "\   '-file-line-error',
+    "\   '-synctex=1',
+    "\   '-interaction=nonstopmode',
+    "\ ]
+    "\}
 let g:vimtex_compiler_latexmk = {
     \ 'options' : [
-    \   '-pdf',
-    \   '-pdflatex="xelatex --shell-escape %O %S"',
-    \   '-verbose',
-    \   '-file-line-error',
-    \   '-synctex=1',
+    \   'main.tex',
+    \   '-shell-escape',
     \   '-interaction=nonstopmode',
     \ ]
     \}
@@ -545,8 +556,6 @@ set statusline+=%{NearestMethodOrFunction()}
 "\   "struct": "->",
 "\  }
 
-
-
 " latex specific things
 
 let g:airline_section_b = ""
@@ -635,6 +644,11 @@ colorscheme azure
 "function! Handle_Win_Enter()
   "setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
 "endfunction
+nnoremap S :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
+
+" needed for chromatica
+"let g:chromatica#libclang_path='/usr/lib64/llvm/8/lib64/libclang.so'
+"let g:chromatica#enable_at_startup=1
 
 " adds in coc ultisnip CR completion
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
